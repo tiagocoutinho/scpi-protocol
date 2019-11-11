@@ -231,14 +231,28 @@ class Commands(object):
     def __getitem__(self, cmd_name):
         return self.get_command(cmd_name)['value']
 
+    def __delitem__(self, cmd_expr):
+        reg_expr = self.command_expressions.pop(cmd_expr)['re']
+        del_cache = {k for k, v in self._command_cache.items()
+                     if reg_expr.match(k)}
+        for k in del_cache:
+            del self._command_cache[k]
+
     def __contains__(self, cmd_name):
         return self.get(cmd_name) is not None
 
     def __len__(self):
         return len(self.command_expressions)
 
+    def clear(self):
+        self.command_expressions.clear()
+        self._command_cache.clear()
+
     def keys(self):
         return self.command_expressions.keys()
+
+    def values(self):
+        return {k:v['value'] for k, v in self.command_expressions.items()}.values()
 
     def get_command(self, cmd_name):
         cmd_expr = self.get_command_expression(cmd_name)
