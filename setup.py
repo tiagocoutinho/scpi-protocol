@@ -31,7 +31,7 @@ setup(
         'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7'
     ],
-    description="Concurrency agnostic socket API",
+    description="Sans I/O SCPI protocol parser",
     license="GPLv3+",
     long_description=description,
     long_description_content_type='text/markdown',
@@ -41,7 +41,7 @@ setup(
     setup_requires=setup_requirements,
     test_suite='tests',
     tests_require=test_requirements,
-    url='https://tiagocoutinho.github.io/libscpi/',
+    url='https://gitlab.com/tiagocoutinho/scpi-protocol/',
     version='0.1.2',
     python_requires='>=3.5',
     zip_safe=True
