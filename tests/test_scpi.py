@@ -130,6 +130,7 @@ def test_commands():
     assert commands["MEAS"] is commands["measure:current:dc"]
     assert len(commands) == len(cmd_dict)+1
     assert set(commands.keys()) == keys
+    assert len(commands.values()) == len(cmd_dict)+1
 
     assert commands.get_command(":*idn")["min_command"] == "*IDN"
     assert commands.get_command("system:error:next")["min_command"] == "SYST:ERR"
@@ -137,3 +138,14 @@ def test_commands():
     with pytest.raises(KeyError) as err:
         commands["IDN"]
     assert "IDN" in str(err.value)
+
+    assert "*WAI" in commands
+    del commands["*WAI"]
+    assert "*WAI" not in commands
+    assert len(commands) == len(cmd_dict)+1-1
+
+    commands.clear()
+    assert len(commands) == 0
+
+    with pytest.raises(KeyError) as err:
+        del commands["toto"]
