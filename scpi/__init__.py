@@ -186,11 +186,11 @@ class Commands(object):
 
         from bliss.comm.scpi import FuncCmd, ErrCmd, IntCmd, Commands
 
-        # c1 will only have \*CLS command
+        # c1 will only have *CLS command
         c1 = Commands({'*CLS': FuncCmd(doc='clear status'),
                        '*RST': FuncCmd(doc='reset')})
 
-        # c2 will have \*CLS and VOLTage commands
+        # c2 will have *CLS and VOLTage commands
         c2 = Commands(c1, VOLTage=IntCmd())
 
         # add error command to c2
