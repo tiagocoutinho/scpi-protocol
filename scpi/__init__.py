@@ -53,14 +53,13 @@ __decode_FloatArray = partial(numpy.fromstring, dtype=float, sep=",")
 #: SCPI command
 #: accepts the following keys:
 #:
-#:   - func_name - functional API name (str, optional, default is the cmd_name)
-#:   - doc - command documentation (str, optional)
 #:   - get - translation function called on the result of a query.
 #:           If not present means command cannot be queried.
 #:           If present and is None means ignore query result
 #:   - set - translation function called before a write.
 #:           If not present means command cannot be written.
 #:           If present and is None means it doesn't receive any argument
+#:   - doc - command documentation (str, optional)
 Cmd = dict
 
 FuncCmd = partial(Cmd, set=None)
@@ -171,16 +170,17 @@ class Commands(object):
     dict.  When creating a Commands object, *args* must either:
 
     * another *Commands* object
-    * a dict where keys must be SCPI command expressions
-      (ex: `SYSTem:ERRor[:NEXT]`) and values instances of *Cmd*
+    * a dict where keys should be SCPI command expressions
+      (ex: `SYSTem:ERRor[:NEXT]`). Values can be any python objects
+      Common use-case is instance of *Cmd* which contain information on how to
+      handle a get/set operation and optional docstrings
     * a sequence of pairs where first element must be SCPI command expression
-      and second element an instance of *Cmd*
+      and second element is any python object
 
-    *kwargs* should also be SCPI command expressions; *kwargs* values should be
-    instances of *Cmd*.
+    *kwargs* should also be SCPI command expressions;
 
     The same way, assignment keys should be SCPI command expressions and
-    assignment values should be instances of *Cmd*.
+    assignment values can be any python object.
 
     Examples::
 
@@ -196,14 +196,14 @@ class Commands(object):
         # add error command to c2
         c2['SYSTem:ERRor[:NEXT]'] = ErrCmd()
 
-    Access to a command will return the same command for different SCPI command
-    alternatives. Note that access to command is done through a specific form
-    of SCPI command and not the entire SCPI command expression (as opposed to
-    the assignment):
+    Access to a command will return the same python object for any text
+    that resolves to the same SCPI command::
 
-        >>> err_cmd1 = c2['SYST:ERR']
-        >>> err_cmd2 = c2[':system:error:next']
-        >>> print(err_cm1 == err_cmd2)
+        >>> c2['SYST:ERR']
+        <ErrCmd at 0x7f3f663bf390>
+        >>> c2[':system:error:next']
+        <ErrCmd at 0x7f3f663bf390>
+        >>> c2[':system:error:next'] == c2['SYST:ERR']
         True
     """
 
