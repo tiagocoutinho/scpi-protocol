@@ -19,7 +19,7 @@ with open('README.md') as f:
     description = f.read()
 
 setup(
-    name='libscpi',
+    name='scpi-protocol',
     author="Jose Tiago Macara Coutinho",
     author_email='coutinhotiago@gmail.com',
     classifiers=[
