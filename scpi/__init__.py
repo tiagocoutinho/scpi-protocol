@@ -315,7 +315,7 @@ class SCPIError(Exception):
     """
 
 
-def sanitize_msgs(*msgs, **opts):
+def sanitize_msgs(*msgs, eol='\n', sep=';', strict_query=True):
     """
     Transform a tuple of messages into a list  of
     (<individual commands>, <individual queries>, <full_message>):
@@ -328,9 +328,6 @@ def sanitize_msgs(*msgs, **opts):
         msgs = ('*rst', '*idn?;*cls') =>
             (['*RST', '*IDN?', '*CLS'], ['*IDN?'], '*RST\n*IDN?;*CLS')
     """
-    eol = opts.get("eol", "\n")
-    sep = opts.get("sep", ";")
-    strict_query = opts.get("strict_query", True)
     # in case a single message comes with several eol separated commands
     msgs = eol.join(msgs).split(eol)
     result, commands, queries = [], [], []
