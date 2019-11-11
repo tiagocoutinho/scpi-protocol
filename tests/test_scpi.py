@@ -7,10 +7,10 @@ from scpi import (
     Cmd,
     FuncCmd,
     IntCmd,
-    IntCmdRO,
-    IntCmdWO,
-    FloatCmdRO,
-    StrCmdRO,
+    IntCmdR,
+    IntCmdW,
+    FloatCmdR,
+    StrCmdR,
     IDNCmd,
     ErrCmd,
 )
@@ -100,15 +100,15 @@ def test_commands():
     cmd_dict = {
             "*CLS": FuncCmd(doc="clear status"),
             "*ESE": IntCmd(doc="standard event status enable register"),
-            "*ESR": IntCmdRO(doc="standard event event status register"),
+            "*ESR": IntCmdR(doc="standard event event status register"),
             "*IDN": IDNCmd(),
-            "*OPC": IntCmdRO(set=None, doc="operation complete"),
-            "*OPT": IntCmdRO(doc="return model number of any installed options"),
-            "*RCL": IntCmdWO(set=int, doc="return to user saved setup"),
+            "*OPC": IntCmdR(set=None, doc="operation complete"),
+            "*OPT": IntCmdR(doc="return model number of any installed options"),
+            "*RCL": IntCmdW(set=int, doc="return to user saved setup"),
             "*RST": FuncCmd(doc="reset"),
-            "*SAV": IntCmdWO(doc="save the preset setup as the user-saved setup"),
-            "*SRE": IntCmdWO(doc="service request enable register"),
-            "*STB": StrCmdRO(doc="status byte register"),
+            "*SAV": IntCmdW(doc="save the preset setup as the user-saved setup"),
+            "*SRE": IntCmdW(doc="service request enable register"),
+            "*STB": StrCmdR(doc="status byte register"),
             "*TRG": FuncCmd(doc="bus trigger"),
             "*TST": Cmd(get=lambda x: not decode_OnOff(x), doc="self-test query"),
             "*WAI": FuncCmd(doc="wait to continue"),
@@ -116,7 +116,7 @@ def test_commands():
     }
 
     commands = Commands(cmd_dict,
-        {"MEASure[:CURRent[:DC]]": FloatCmdRO(get=lambda x: float(x[:-1]))},
+        {"MEASure[:CURRent[:DC]]": FloatCmdR(get=lambda x: float(x[:-1]))},
     )
     keys = set(cmd_dict).union({"MEASure[:CURRent[:DC]]"})
 

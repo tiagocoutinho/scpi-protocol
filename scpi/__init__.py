@@ -66,28 +66,28 @@ Cmd = dict
 FuncCmd = partial(Cmd, set=None)
 
 IntCmd = partial(Cmd, get=int, set=str)
-IntCmdRO = partial(Cmd, get=int)
-IntCmdWO = partial(Cmd, set=str)
+IntCmdR = partial(Cmd, get=int)
+IntCmdW = partial(Cmd, set=str)
 
 FloatCmd = partial(Cmd, get=float, set=str)
-FloatCmdRO = partial(Cmd, get=float)
-FloatCmdWO = partial(Cmd, set=str)
+FloatCmdR = partial(Cmd, get=float)
+FloatCmdW = partial(Cmd, set=str)
 
 StrCmd = partial(Cmd, get=str, set=str)
-StrCmdRO = partial(Cmd, get=str)
-StrCmdWO = partial(Cmd, set=str)
+StrCmdR = partial(Cmd, get=str)
+StrCmdW = partial(Cmd, set=str)
 
-IntArrayCmdRO = partial(Cmd, get=__decode_IntArray)
-FloatArrayCmdRO = partial(Cmd, get=__decode_FloatArray)
+IntArrayCmdR = partial(Cmd, get=__decode_IntArray)
+FloatArrayCmdR = partial(Cmd, get=__decode_FloatArray)
 StrArrayCmd = partial(Cmd, get=lambda x: x.split(","), set=lambda x: ",".join(x))
-StrArrayCmdRO = partial(Cmd, get=lambda x: x.split(","))
+StrArrayCmdR = partial(Cmd, get=lambda x: x.split(","))
 
 OnOffCmd = partial(Cmd, get=__decode_OnOff, set=__encode_OnOff)
-OnOffCmdRO = partial(Cmd, get=__decode_OnOff)
-OnOffCmdWO = partial(Cmd, set=__encode_OnOff)
+OnOffCmdR = partial(Cmd, get=__decode_OnOff)
+OnOffCmdW = partial(Cmd, set=__encode_OnOff)
 BoolCmd = OnOffCmd
-BoolCmdRO = OnOffCmdRO
-BoolCmdWO = OnOffCmdWO
+BoolCmdR = OnOffCmdR
+BoolCmdW = OnOffCmdW
 
 IDNCmd = partial(Cmd, get=decode_IDN, doc="identification query")
 
@@ -278,15 +278,15 @@ COMMANDS = Commands(
     {
         "*CLS": FuncCmd(doc="clear status"),
         "*ESE": IntCmd(doc="standard event status enable register"),
-        "*ESR": IntCmdRO(doc="standard event event status register"),
+        "*ESR": IntCmdR(doc="standard event event status register"),
         "*IDN": IDNCmd(),
-        "*OPC": IntCmdRO(set=None, doc="operation complete"),
-        "*OPT": IntCmdRO(doc="return model number of any installed options"),
-        "*RCL": IntCmdWO(set=int, doc="return to user saved setup"),
+        "*OPC": IntCmdR(set=None, doc="operation complete"),
+        "*OPT": IntCmdR(doc="return model number of any installed options"),
+        "*RCL": IntCmdW(set=int, doc="return to user saved setup"),
         "*RST": FuncCmd(doc="reset"),
-        "*SAV": IntCmdWO(doc="save the preset setup as the user-saved setup"),
-        "*SRE": IntCmdWO(doc="service request enable register"),
-        "*STB": StrCmdRO(doc="status byte register"),
+        "*SAV": IntCmdW(doc="save the preset setup as the user-saved setup"),
+        "*SRE": IntCmdW(doc="service request enable register"),
+        "*STB": StrCmdR(doc="status byte register"),
         "*TRG": FuncCmd(doc="bus trigger"),
         "*TST": Cmd(get=lambda x: not __decode_OnOff(x), doc="self-test query"),
         "*WAI": FuncCmd(doc="wait to continue"),
