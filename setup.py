@@ -42,7 +42,7 @@ setup(
     test_suite='tests',
     tests_require=test_requirements,
     url='https://gitlab.com/tiagocoutinho/scpi-protocol/',
-    version='0.1.2',
+    version='0.1.3',
     python_requires='>=3.5',
     zip_safe=True
 )
