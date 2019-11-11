@@ -4,7 +4,7 @@ from functools import partial
 
 import numpy
 
-__version__ = '0.1.1'
+__version__ = '0.1.2'
 
 
 def decode_IDN(s):

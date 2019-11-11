@@ -42,7 +42,7 @@ setup(
     test_suite='tests',
     tests_require=test_requirements,
     url='https://tiagocoutinho.github.io/libscpi/',
-    version='0.1.1',
+    version='0.1.2',
     python_requires='>=3.5',
     zip_safe=True
 )
