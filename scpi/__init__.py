@@ -329,9 +329,6 @@ def sanitize_msgs(*msgs, **opts):
             (['*RST', '*IDN?', '*CLS'], ['*IDN?'], '*RST\n*IDN?;*CLS')
     """
     eol = opts.get("eol", "\n")
-    # eol has to be a string
-    if isinstance(eol, bytes):
-        eol = eol.decode()
     sep = opts.get("sep", ";")
     strict_query = opts.get("strict_query", True)
     # in case a single message comes with several eol separated commands
