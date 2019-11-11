@@ -1,15 +1,16 @@
-# libscpi
+# scpi-protocol
 
 ![Pypi version][pypi]
 
-A python SCPI parser library.
+Sans I/O python SCPI parser library.
 
 ## Installation
 
 From within your favourite python environment:
 
 ```console
-pip install libscpi
+pip install scpi-protocol
 ```
 
-[pypi]: https://img.shields.io/pypi/pyversions/libscpi.svg
+[pypi]: https://img.shields.io/pypi/pyversions/scpi-protocol.svg
+
