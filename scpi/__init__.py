@@ -1,6 +1,7 @@
 import re
 import inspect
 from functools import partial
+from collections import namedtuple
 
 import numpy
 
@@ -351,3 +352,20 @@ def sanitize_msgs(*msgs, eol='\n', sep=';', strict_query=True):
         if sub_result:
             result.append(sep.join(sub_result))
     return commands, queries, eol.join(result) + eol
+
+
+Request = namedtuple('Request', 'name args query')
+
+
+def split_line(line, sep=';'):
+    line = line.strip().strip(';')
+    requests = []
+    for req_str in line.split(sep):
+        if not req_str:
+            continue
+        query = '?' in req_str
+        req_str = req_str.replace('?', '')
+        name, _, args = req_str.partition(' ')
+        name, args = name.strip(), args.strip()
+        requests.append(Request(name, args, query))
+    return requests

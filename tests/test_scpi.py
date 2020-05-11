@@ -1,7 +1,11 @@
 import pytest
 
-from scpi import sanitize_msgs, min_max_cmd, cmd_expr_to_reg_expr
 from scpi import (
+    sanitize_msgs,
+    min_max_cmd,
+    cmd_expr_to_reg_expr,
+    split_line,
+    Request,
     Commands,
     COMMANDS,
     Cmd,
@@ -149,3 +153,21 @@ def test_commands():
 
     with pytest.raises(KeyError) as err:
         del commands["toto"]
+
+
+def test_split_line():
+
+    assert split_line('') == []
+    assert split_line(';:CONTROL?') == [Request(":CONTROL", "", True)]
+    assert split_line('CONTROL?') == [Request("CONTROL", "", True)]
+    assert split_line('CONTROL ON') == [Request("CONTROL", "ON", False)]
+    assert split_line(';;;CONTROL ON;;') == [Request("CONTROL", "ON", False)]
+
+    line = ";:CONTROL?;:INPUT A:TEMP?;:INPUT B:TEMP?;:CONTROL C1-ON C2-OFF;\n"
+    result = [
+        Request(":CONTROL", "", True),
+        Request(":INPUT", "A:TEMP", True),
+        Request(":INPUT", "B:TEMP", True),
+        Request(":CONTROL", "C1-ON C2-OFF", False)
+    ]
+    assert split_line(line) == result
