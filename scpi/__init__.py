@@ -5,7 +5,7 @@ from collections import namedtuple
 
 import numpy
 
-__version__ = '0.1.4'
+__version__ = '0.2.0'
 
 
 def decode_IDN(s):
